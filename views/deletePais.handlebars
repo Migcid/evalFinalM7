@@ -1,0 +1,31 @@
+<h1 class="text-center mt-5">eliminar País</h1>
+
+
+<form id="deletePais">
+    nombre: <input class="form-control" type="text" name="nombre" id="nombre" required>
+    <button  type="submit" class="btn btn-danger mt-3">Eliminar</button>
+</form>
+
+
+<script>
+    let formEliminar = document.getElementById("deletePais");
+
+    formEliminar.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+    let nombrePais = nombre.value;
+        fetch("/delete/pais/"+nombrePais , {
+            method: "delete"
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.code != 200){
+                alert("Algo ha pasado!: " + data.error)
+            }else{
+                alert(data.message)
+            }
+        }).catch(error => {
+            alert("Algo ha fallado al realizar la consulta")
+        })
+    })
+</script>

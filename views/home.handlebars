@@ -1,0 +1,33 @@
+<h1 class="text-center mt-5">Página principal</h1>
+
+<section>
+    Cantidad de registros a mostrar:
+    <select name="option" id="option">
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="5">5</option>
+    </select>
+    <button class="btn btn-primary" id="btnSiguiente" {{#if disableSiguiente}}disabled{{/if}}>Siguiente</button>
+</section>
+
+{{#each paises}}
+    <p>{{this.nombre}}</p>
+{{/each}}
+
+<script>
+    let ultimoOffset = {{ultimoOffset}};
+    let btnSiguiente = document.getElementById("btnSiguiente");
+    let selectOption = document.getElementById("option");
+
+    function actualizarVista() {
+        let nuevoOffset = ultimoOffset + parseInt(selectOption.value);
+        if (isNaN(nuevoOffset)) nuevoOffset = 0;
+        location.href = `http://localhost:3000/home?limit=${selectOption.value}&offset=${nuevoOffset}`;
+    }
+
+    btnSiguiente.addEventListener("click", actualizarVista);
+    selectOption.addEventListener("change", () => {
+        ultimoOffset = 0; // Reiniciar el offset al cambiar la selección
+        actualizarVista();
+    });
+</script>
